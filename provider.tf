@@ -9,12 +9,7 @@ terraform {
 }
 
 provider "openstack" {
- user_name   = ""
- #password = "..."  # password OR the two application_credential_* settings
- application_credential_name = ""
- application_credential_secret = ""
- tenant_name = "demo"
- auth_url    = "http://api.dl.acrc.bris.ac.uk:5000"
+  cloud = "openstack"
 }
 
 data "openstack_images_image_v2" "rocky_9" {
@@ -27,7 +22,7 @@ data "openstack_compute_flavor_v2" "m1_medium" {
 }
 
 data "template_file" "user_data" {
-  template = file("cloud-init.yaml")
+  template = file("user-data")
 }
 
 resource "openstack_compute_instance_v2" "basic" {
